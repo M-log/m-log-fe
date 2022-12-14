@@ -5,7 +5,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["ES2015"],
-    "module": "ESNext",
+    "module": "commonjs",
     "target": "es6"
   }
 }
