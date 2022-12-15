@@ -1,73 +1,70 @@
-# Turborepo starter
+# 마이다스 기술 블로그 사용법
+- - -
+## Turborepo
 
-This is an official npm starter turborepo.
+[터보레포](https://turbo.build/)에 대해서는 링크 참고 부탁드립니다 허허,,
+- - -
+## 명령어
 
-## What's inside?
+### root
+- ```npm run build```
+  - 빌드합니다.
+- ```npm run dev```
+  - dev 버전으로 돌립니다.
+- ```npm run prettify --path={path}```
+  - prettier 돌립니다
 
-This turborepo uses [npm](https://www.npmjs.com/) as a package manager. It includes the following packages/apps:
+**주의사항**
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+```bash
+npm run prettify --path=ui
 ```
-cd my-turborepo
-npm run build
+꼴로 입력하면 ui 폴더 내의 ts, tsx 파일들에 prettier가 적용됩니다. 각자에게 맞는 경로에서 사용하심 됩니다.
+
+- - -
+## 폴더 구조
 ```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-npm run dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+├── apps
+│   └── web
+│       └── package.json
+├── package
+│   ├── eslint-config-custom
+│   │   ├── base-eslint-preset.js
+│   │   └── .eslintrc.js
+│   ├── tsconfig
+│   │   ├── base.json
+│   │   └── react-library.json
+│   ├── ui
+│   ├── Users or Hyeon or something
+│   │   └── Some web project
+│   └── ...
+└── .gitignore
+``` 
+- **apps**
+  - 퍼블리싱 될 서비스가 올라갈 폴더입니다.
+  - 각자 만든 프로젝트가 모듈로 잘 export 되는지 확인 하려면 이 곳에 올리고
+    실행시켜보면 됩니다.
+    - **web**
+      - 임시로 올린 default 프로젝트입니다. 
+        - **package.json**
+          - packages에서 작업한 결과물을 어떻게 받아오는지 보여드리기 위해 작성합니다.
+            ```dependencies``` 내부에 ```"ui": "*"``` 처럼 불러오면 됩니다.
+- **packages**
+  - 실질적으로 각자 작업할 공간입니다.
+  - 해당 폴더에서 작업 후 모듈로 export 하시면 됩니다.
+    - **eslint-config-custom**
+      - **base-eslint-preset.js**
+        - 기본 eslint 설정이 있습니다.
+      - **.eslintrc.js**
+        - 어떻게 기본 설정을 가져오고, 오버라이드 하는지 보여드리기 위해 임의로 만든 파일입니다.
+        - 모듈을 require로 가져와 스프레드 해주고, 각자 사용하고 싶은 익스텐스, 플러그인, 규칙 등을
+          예시에 나와있는 rules처럼 오버라이드 하시면 됩니다.
+    - **tsconfig**
+      - **base.json**
+        - 기본 tsconfig 세팅이 있습니다.
+      - **react-library.json**
+        - packages에서 리액트로 작업하실 때 가져오면 되는 파일입니다.
+    - **ui**
+      - turbo 세팅할 때 기본적으로 생기는 디랙토린데, 내부 파일들 보면서 세팅하시면 편할 것 같아 남겨두었습니다.
+- **.gitignore**
+  - 만약 본인의 node_modules나 build 등 올라가지 않아도 될 항목들이 잡힌다면 이그노어 해주세요.
