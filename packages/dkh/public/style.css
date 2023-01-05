@@ -1,0 +1,15 @@
+body,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}

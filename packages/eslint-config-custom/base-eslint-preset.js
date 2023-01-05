@@ -23,27 +23,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'global-require': 'off',
-    'object-curly-newline': [
-      'error',
-      {
-        ObjectExpression: {
-          minProperties: 4,
-          multiline: true,
-          consistent: true,
-        },
-        ObjectPattern: {
-          minProperties: 4,
-          multiline: true,
-          consistent: true,
-        },
-        ImportDeclaration: 'never',
-        ExportDeclaration: {
-          minProperties: 4,
-          multiline: true,
-          consistent: true,
-        },
-      },
-    ],
+    'object-curly-newline': 0,
     'linebreak-style': 'off',
     'arrow-body-style': 'off',
     'no-bitwise': 'off',
@@ -54,13 +34,13 @@ module.exports = {
       {
         selector: ['enum'],
         format: ['PascalCase'],
-        prefix: ['E']
+        prefix: ['E'],
       },
       {
         selector: ['interface'],
         format: ['PascalCase'],
-        prefix: ['I']
-      }
-    ]
+        prefix: ['I'],
+      },
+    ],
   },
 };
