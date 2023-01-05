@@ -6,6 +6,7 @@ const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
 const px0_300 = { ...Array.from(Array(301)).map((_, i) => `${i}px`) };
 const px0_400 = { ...Array.from(Array(401)).map((_, i) => `${i}px`) };
+const px0_1000 = { ...Array.from(Array(1001)).map((_, i) => `${i}px`) };
 
 module.exports = {
   content: ['./src/**/*.tsx'],
@@ -16,7 +17,7 @@ module.exports = {
         lightgray: '#D7D7D7',
         lightgray2: '#EFEFEF',
       },
-      spacing: px0_400,
+      spacing: px0_1000,
       fontSize: px0_100,
       lineHeight: px0_100,
     },

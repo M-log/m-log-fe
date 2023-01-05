@@ -1,73 +1,67 @@
 import axios from 'axios';
-import {
+import React, {
   ChangeEvent,
-  MouseEvent,
-  MouseEventHandler,
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import Header from '../../components/Header';
 import ListItem from './ArticleItem';
+import { useNavigate, useLocation } from 'react-router-dom';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 export default function ArticleList() {
-  const [currentCategory, setCurrentCategory] = useState('FrontEnd');
-  const [list, setList] = useState([]);
-  const [tagList, setTagList] = useState([]);
-  const [selectTagList, setSelectTagList] = useState([]);
+  const location = useLocation();
+  const currentCategoryFromUrl: string =
+    location.pathname.split('/').at(-1) || '';
 
-  const getList = async () => {
-    const res = await axios.get('/list/frontend');
-    setList(res.data);
-  };
-
-  const getTagList = async () => {
-    const res = await axios.get('/list/frontend/tags');
-    setTagList(res.data);
-  };
-
-  useEffect(() => {
-    getList();
-    getTagList();
-  }, []);
-
-  const handleChangeCategory: MouseEventHandler<HTMLButtonElement> = (e) => {
-    // console.log(e.currentTarget);
-
-    const button = e.target as HTMLButtonElement;
-    setCurrentCategory(button.value);
-  };
-
-  const handleClickAddTag = (e: any) => {};
+  const { ref, articleList, tagList, handleCheckAddTag } = useInfiniteScroll(
+    currentCategoryFromUrl,
+  );
 
   return (
     <>
-      <Header
-        currentCategory={currentCategory}
-        onChange={handleChangeCategory}
-      />
+      <Header />
 
       {/* Article List */}
-      <ul className="px-50 lg:px-370">
-        {list &&
-          list.map(({ title, date, summary, tags }) => (
-            <ListItem title={title} date={date} summary={summary} tags={tags} />
-          ))}
-      </ul>
+      <div>
+        <ul className="px-10 mx-auto w-700" ref={ref}>
+          {articleList &&
+            articleList.map(({ title, date, summary, tags }, i) => (
+              <ListItem
+                key={i}
+                title={title}
+                date={date}
+                summary={summary}
+                tags={tags}
+              />
+            ))}
+        </ul>
 
-      {/* Article Tags */}
-      <ul className="fixed flex flex-col justify-center right-120 top-300">
-        {tagList &&
-          tagList.map((tag) => (
-            <li>
-              <button
-                className="block text-darkgray"
-                onClick={handleClickAddTag}
-              >
-                {tag}
-              </button>
-            </li>
-          ))}
-      </ul>
+        {/* Tags */}
+        <ul className="fixed hidden left-3/4 top-300 xl:block text-20">
+          <p className="pt-10 font-bold text-16">
+            [ 현재 포스팅 개수: {articleList.length} ]
+          </p>
+          {tagList &&
+            tagList.map((tag, i) => (
+              <li key={i}>
+                <label>
+                  <input
+                    type="checkbox"
+                    className="hidden peer"
+                    value={tag}
+                    onChange={handleCheckAddTag}
+                  />
+                  <span className="cursor-pointer text-darkgray peer-checked:text-black peer-checked:font-bold">
+                    {tag}
+                  </span>
+                </label>
+              </li>
+            ))}
+        </ul>
+      </div>
     </>
   );
 }

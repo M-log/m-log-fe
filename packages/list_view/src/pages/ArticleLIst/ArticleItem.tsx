@@ -8,7 +8,7 @@ export default function ArticleItem({
   tags,
 }: ArticleItemProps) {
   return (
-    <li className="flex flex-col">
+    <li className="flex flex-col border-b-2 border-lightgray2">
       <h2 className="pt-20">{title}</h2>
       <time className="pt-5 text-darkgray text-14" dateTime={date}>
         {date}
@@ -16,8 +16,11 @@ export default function ArticleItem({
       <p className="pt-10 text-16 text-darkgray ">{summary}</p>
       <div className="py-10 [&>*:nth-child(n+2)]:ml-10">
         {tags &&
-          tags.map((tag) => (
-            <span className="py-2 rounded-full w-fit px-15 bg-lightgray">
+          tags.map((tag, i) => (
+            <span
+              key={i}
+              className="py-2 rounded-full w-fit px-15 bg-lightgray"
+            >
               #{tag}
             </span>
           ))}

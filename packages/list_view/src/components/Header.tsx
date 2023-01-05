@@ -1,39 +1,75 @@
-import React from 'react';
-import { CategoryProps, HeaderProps } from './types/Header';
-import cn from 'classnames';
-import tw from 'twin.macro';
+import { CategoryProps } from './types/Header';
+import { NavLink } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { onScroll } from '../util/onScroll';
 
-const category: CategoryProps[] = ['FrontEnd', 'BackEnd'];
+const categories: CategoryProps[] = ['frontend', 'backend'];
 
-export default function Header({ currentCategory, onChange }: HeaderProps) {
+const uppercaseCategory = (category: CategoryProps) => {
+  switch (category) {
+    case 'frontend':
+      return 'FrontEnd';
+    case 'backend':
+      return 'BackEnd';
+  }
+};
+
+export default function Header() {
+  const [isScrollDown, setIsScrollDown] = useState(false);
+
+  const updateScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrollDown(true);
+    } else {
+      setIsScrollDown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('scroll', onScroll(updateScroll), {
+      passive: true,
+    });
+  }, []);
+
   return (
-    <header className="relative text-white bg-black h-200 px-50 lg:px-250 py-30">
-      <h1 className="leading-28">
-        MIDAS
-        <span className="block font-normal text-20">기술블로그</span>
-      </h1>
+    <>
+      <header
+        className={`transition-all fixed top-0 w-full text-white bg-black ${
+          isScrollDown ? 'h-50' : 'h-200'
+        }`}
+      >
+        <div className="px-10 mx-auto w-700">
+          <h1
+            className={`leading-28 pt-30 ${isScrollDown ? 'hidden' : 'block'}`}
+          >
+            MIDAS
+            <span className="block font-normal text-20">기술블로그</span>
+          </h1>
 
-      {/* 카테고리 */}
-      <nav className="absolute bottom-0 lg:px-120 pb-15 text-20">
-        <ul className="[&>*:nth-child(n+2)]:pl-30 flex flex-row">
-          {category.map((item) => (
-            <li>
-              <button
-                type="button"
-                className={
-                  item === currentCategory
-                    ? 'text-white font-bold'
-                    : 'text-darkgray'
-                }
-                onClick={onChange}
-                value={item}
-              >
-                {item}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </header>
+          {/* 카테고리 */}
+          <nav
+            className={`mx-auto w-700 text-20 relative ${
+              isScrollDown ? 'top-10' : 'top-70'
+            }`}
+          >
+            <ul className="[&>*:nth-child(n+2)]:pl-30 flex flex-row">
+              {categories.map((categoryItem, i) => (
+                <li key={i}>
+                  <NavLink
+                    to={`/articlelist/${categoryItem}`}
+                    className={({ isActive }) =>
+                      isActive ? 'text-white font-bold' : 'text-darkgray'
+                    }
+                  >
+                    {uppercaseCategory(categoryItem)}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </header>
+      <div className={isScrollDown ? 'h-50' : 'h-200'}></div>
+    </>
   );
 }
