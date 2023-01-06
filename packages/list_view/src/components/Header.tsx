@@ -29,6 +29,8 @@ export default function Header() {
     document.addEventListener('scroll', onScroll(updateScroll), {
       passive: true,
     });
+
+    return document.removeEventListener('scroll', onScroll(updateScroll));
   }, []);
 
   return (
