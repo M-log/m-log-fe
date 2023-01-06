@@ -9,7 +9,7 @@ import {
 import ArticleItemProps from '../pages/ArticleLIst/types/ArticleItem';
 
 interface useInfiniteScrollType {
-  ref: MutableRefObject<HTMLUListElement | null>;
+  observeTargetRef: MutableRefObject<HTMLUListElement | null>;
   articleList: ArticleItemProps[];
   tagList: string[];
   handleCheckAddTag: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -97,7 +97,7 @@ export default function useInfiniteScroll(
   }, [currentCategory, articleList, currentPage]);
 
   return {
-    ref,
+    observeTargetRef: ref,
     articleList,
     tagList,
     handleCheckAddTag,

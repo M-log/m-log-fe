@@ -16,9 +16,8 @@ export default function ArticleList() {
   const currentCategoryFromUrl: string =
     location.pathname.split('/').at(-1) || '';
 
-  const { ref, articleList, tagList, handleCheckAddTag } = useInfiniteScroll(
-    currentCategoryFromUrl,
-  );
+  const { observeTargetRef, articleList, tagList, handleCheckAddTag } =
+    useInfiniteScroll(currentCategoryFromUrl);
 
   return (
     <>
@@ -26,7 +25,7 @@ export default function ArticleList() {
 
       {/* Article List */}
       <div>
-        <ul className="px-10 mx-auto w-700" ref={ref}>
+        <ul className="px-10 mx-auto w-700" ref={observeTargetRef}>
           {articleList &&
             articleList.map(({ title, date, summary, tags }, i) => (
               <ListItem
