@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react",
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "paths": {
+      "@styles/*": ["./src/styles/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@components/*": ["./src/components/*"],
+      "@assets/*": ["./src/assets/*"],
+    },
+    "downlevelIteration": true
+  },
+  "extends": "tsconfig/react-library.json",
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}
